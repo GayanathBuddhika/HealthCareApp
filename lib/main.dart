@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:matcher/matcher.dart';
+import 'model.dart';
+import 'result.dart';
+
 void main(){
   runApp(MyApp());
 }
@@ -42,6 +45,12 @@ class _HealtFormState extends State<HealtForm> {
             child: MyCustomFormField(
               hintText: "Master IP Address",
               isIp: true,
+              validator: (String value){
+                if(value.isEmpty){
+                  return 'plece enter your IP Address';
+                }
+                return null;
+              },
             ),
           ),
           RaisedButton(
@@ -53,6 +62,7 @@ class _HealtFormState extends State<HealtForm> {
               ),
             ),
             onPressed: (){
+              if(_formKey.currentState.validate()){}
               print('submit');
             },
           )
