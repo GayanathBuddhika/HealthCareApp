@@ -39,10 +39,26 @@ class _HealtFormState extends State<HealtForm> {
           Container(
             alignment: Alignment.topCenter,
             width: mediaWidth,
-            child: MyCustomFormField()
+            child: MyCustomFormField(
+              hintText: "Master IP Address",
+              isIp: true,
+            ),
+          ),
+          RaisedButton(
+            color: Colors.blueAccent,
+            child: Text(
+              'Submit',
+              style: TextStyle(
+                color: Colors.white
+              ),
+            ),
+            onPressed: (){
+              print('submit');
+            },
           )
         ],
       ),
+
     );
   }
 }
@@ -51,10 +67,12 @@ class MyCustomFormField extends StatelessWidget {
   final String hintText;
   final Function validator;
   final Function onSaved;
+  final bool isIp;
   MyCustomFormField({
     this.hintText,
     this.validator,
     this.onSaved,
+    this.isIp= false,
    });
   @override
   Widget build(BuildContext context) {
@@ -68,6 +86,9 @@ class MyCustomFormField extends StatelessWidget {
           filled: true,
           fillColor: Colors.grey[200]
         ),
+        validator: validator,
+        onSaved: onSaved,
+        keyboardType: isIp ? TextInputType.number : TextInputType.text,
       ),
     );
   }
