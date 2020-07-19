@@ -8,54 +8,114 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Health Care",
-      home: HomePage()
+      home: Scaffold(
+        appBar: AppBar(
+        title: Text('Health Care'),
+        ),
+        body: HealtForm(),
+      )
     );
   }
 }
 
-class HomePage extends StatefulWidget {
+
+
+
+class HealtForm extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HealtFormState createState() => _HealtFormState();
 }
 
-class _HomePageState extends State<HomePage> {
-  int count = 0;
-
-  void increment(){
-
-    setState(() {
-      count = count +1;
-      print(count);
-    });
-
-  }
+class _HealtFormState extends State<HealtForm> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Health Care"),
+    final mediaWidth = MediaQuery.of(context).size.width;
+
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: <Widget>[
+          Container(
+            alignment: Alignment.topCenter,
+            width: mediaWidth,
+            child: MyCustomFormField()
+          )
+        ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("You Have Clicked Button ", style: TextStyle(
-                fontSize: 25.0
-            ),),
-            Text( '$count', style:TextStyle(
-                fontSize: 30.0
-            ))
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: increment,
-      ),
-      
     );
   }
 }
+
+class MyCustomFormField extends StatelessWidget {
+  final String hintText;
+  final Function validator;
+  final Function onSaved;
+  MyCustomFormField({
+    this.hintText,
+    this.validator,
+    this.onSaved,
+   });
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: TextFormField(
+        decoration: InputDecoration(
+          hintText: hintText,
+          contentPadding: EdgeInsets.all(15.0),
+          border: InputBorder.none,
+          filled: true,
+          fillColor: Colors.grey[200]
+        ),
+      ),
+    );
+  }
+}
+
+
+//class HomePage extends StatefulWidget {
+//  @override
+//  _HomePageState createState() => _HomePageState();
+//}
+//
+//class _HomePageState extends State<HomePage> {
+//  int count = 0;
+//
+//  void increment(){
+//
+//    setState(() {
+//      count = count +1;
+//      print(count);
+//    });
+//
+//  }
+//  @override
+//  Widget build(BuildContext context) {
+//    return Scaffold(
+//      appBar: AppBar(
+//        title: Text("Health Care"),
+//      ),
+//      body: Center(
+//        child: Column(
+//          mainAxisAlignment: MainAxisAlignment.center,
+//          children: <Widget>[
+//            Text("You Have Clicked Button ", style: TextStyle(
+//                fontSize: 25.0
+//            ),),
+//            Text( '$count', style:TextStyle(
+//                fontSize: 30.0
+//            ))
+//          ],
+//        ),
+//      ),
+//      floatingActionButton: FloatingActionButton(
+//        child: Icon(Icons.add),
+//        onPressed: increment,
+//      ),
+//
+//    );
+//  }
+//}
 
 
