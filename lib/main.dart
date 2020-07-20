@@ -8,6 +8,8 @@ void main(){
   runApp(MyApp());
 }
 class MyApp extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,11 +33,21 @@ class HealtForm extends StatefulWidget {
 
 class _HealtFormState extends State<HealtForm> {
   final _formKey = GlobalKey<FormState>();
+  Model model = Model(
+    sen1: '10',
+    sen2: '20',
+    sen3: '30',
+    sen4: '40',
+    sen5: '50',
+  );
+
+
   @override
   Widget build(BuildContext context) {
     final mediaWidth = MediaQuery.of(context).size.width;
 
     return Form(
+
       key: _formKey,
       child: Column(
         children: <Widget>[
@@ -51,7 +63,154 @@ class _HealtFormState extends State<HealtForm> {
                 }
                 return null;
               },
+              onSaved:(String value){
+                model.ipAddress = value;
+              },
             ),
+
+          ),
+            Row(
+              children: <Widget>[
+                Container(
+                  width: mediaWidth*3/4,
+                  child: MyCustomFormField(
+                    hintText: "Add sensor 1 data",
+                    isEnable: false,
+
+                  ),
+                ),
+                Container(
+                  width: mediaWidth/4,
+//                    padding: EdgeInsets.all(8.0),
+                  child: RaisedButton(
+                    color: Colors.green,
+                    child: Text(
+                      'get sen1',
+                      style: TextStyle(
+                        color: Colors.black
+                      ),
+                    ),
+                    onPressed: (){
+
+                    },
+                  )
+                ),
+              ],
+            ),
+          Row(
+            children: <Widget>[
+              Container(
+                width: mediaWidth*3/4,
+                child: MyCustomFormField(
+                  hintText: "Add sensor 1 data",
+                ),
+              ),
+              Container(
+                  width: mediaWidth/4,
+                  child: RaisedButton(
+                    color: Colors.green,
+                    child: Text(
+                      'get sen1',
+                      style: TextStyle(
+                          color: Colors.black
+                      ),
+                    ),
+                    onPressed: (){},
+                  )
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Container(
+                width: mediaWidth*3/4,
+                child: MyCustomFormField(
+                  hintText: "Add sensor 1 data",
+                ),
+              ),
+              Container(
+                  width: mediaWidth/4,
+                  child: RaisedButton(
+                    color: Colors.green,
+                    child: Text(
+                      'get sen1',
+                      style: TextStyle(
+                          color: Colors.black
+                      ),
+                    ),
+                    onPressed: (){},
+                  )
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Container(
+                width: mediaWidth*3/4,
+                child: MyCustomFormField(
+                  hintText: "Add sensor 1 data",
+                ),
+              ),
+              Container(
+                  width: mediaWidth/4,
+                  child: RaisedButton(
+                    color: Colors.green,
+                    child: Text(
+                      'get sen1',
+                      style: TextStyle(
+                          color: Colors.black
+                      ),
+                    ),
+                    onPressed: (){},
+                  )
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Container(
+                width: mediaWidth*3/4,
+                child: MyCustomFormField(
+                  hintText: "Add sensor 1 data",
+                ),
+              ),
+              Container(
+                  width: mediaWidth/4,
+                  child: RaisedButton(
+                    color: Colors.green,
+                    child: Text(
+                      'get sen1',
+                      style: TextStyle(
+                          color: Colors.black
+                      ),
+                    ),
+                    onPressed: (){},
+                  )
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Container(
+                width: mediaWidth*3/4,
+                child: MyCustomFormField(
+                  hintText: "Add sensor 1 data",
+                ),
+              ),
+              Container(
+                  width: mediaWidth/4,
+                  child: RaisedButton(
+                    color: Colors.green,
+                    child: Text(
+                      'get sen1',
+                      style: TextStyle(
+                          color: Colors.black
+                      ),
+                    ),
+                    onPressed: (){},
+                  )
+              ),
+            ],
           ),
           RaisedButton(
             color: Colors.blueAccent,
@@ -62,8 +221,13 @@ class _HealtFormState extends State<HealtForm> {
               ),
             ),
             onPressed: (){
-              if(_formKey.currentState.validate()){}
-              print('submit');
+              if(_formKey.currentState.validate()){
+                print('submit');
+                _formKey.currentState.save();
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>Result(model: this.model,)));
+                print('submit');
+              }
+
             },
           )
         ],
@@ -78,17 +242,20 @@ class MyCustomFormField extends StatelessWidget {
   final Function validator;
   final Function onSaved;
   final bool isIp;
+  final bool isEnable;
   MyCustomFormField({
     this.hintText,
     this.validator,
     this.onSaved,
     this.isIp= false,
+    this.isEnable = true
    });
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: TextFormField(
+       enabled: isEnable,
         decoration: InputDecoration(
           hintText: hintText,
           contentPadding: EdgeInsets.all(15.0),
@@ -105,48 +272,5 @@ class MyCustomFormField extends StatelessWidget {
 }
 
 
-//class HomePage extends StatefulWidget {
-//  @override
-//  _HomePageState createState() => _HomePageState();
-//}
-//
-//class _HomePageState extends State<HomePage> {
-//  int count = 0;
-//
-//  void increment(){
-//
-//    setState(() {
-//      count = count +1;
-//      print(count);
-//    });
-//
-//  }
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//      appBar: AppBar(
-//        title: Text("Health Care"),
-//      ),
-//      body: Center(
-//        child: Column(
-//          mainAxisAlignment: MainAxisAlignment.center,
-//          children: <Widget>[
-//            Text("You Have Clicked Button ", style: TextStyle(
-//                fontSize: 25.0
-//            ),),
-//            Text( '$count', style:TextStyle(
-//                fontSize: 30.0
-//            ))
-//          ],
-//        ),
-//      ),
-//      floatingActionButton: FloatingActionButton(
-//        child: Icon(Icons.add),
-//        onPressed: increment,
-//      ),
-//
-//    );
-//  }
-//}
 
 
