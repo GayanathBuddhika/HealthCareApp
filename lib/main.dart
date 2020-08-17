@@ -48,9 +48,21 @@ class _HealtFormState extends State<HealtForm> {
     print(response.body);
     setState(() {
       var convertDataToJson = jsonDecode(response.body);
-      model.sen1 = convertDataToJson['id'].toString();
-      model.sen2 = convertDataToJson['gpio'].toString();
-      model.sen3 = convertDataToJson['abc'].toString();
+      model.sen1 = convertDataToJson['ida'].toString();
+      model.sen2 = convertDataToJson['idb'].toString();
+      model.sen3 = convertDataToJson['idc'].toString();
+      model.sen4 = convertDataToJson['idd'].toString();
+      model.sen5 = convertDataToJson['ide'].toString();
+      model.sen6 = convertDataToJson['idf'].toString();
+      model.sen7 = convertDataToJson['idg'].toString();
+      model.sen8 = convertDataToJson['idh'].toString();
+      model.sen9 = convertDataToJson['idi'].toString();
+      model.sen10 = convertDataToJson['idj'].toString();
+      model.sen11 = convertDataToJson['idk'].toString();
+      model.sen12 = convertDataToJson['idl'].toString();
+      model.sen13 = convertDataToJson['idm'].toString();
+//      model.sen2 = convertDataToJson['gpio'].toString();
+//      model.sen3 = convertDataToJson['abc'].toString();
 //      model.sen1 = '10';
 //      model.sen2 = '20';
 //      model.sen3 = '30';
@@ -90,19 +102,9 @@ class _HealtFormState extends State<HealtForm> {
               style: TextStyle(fontSize: 15.0),
             ),
             onPressed: () {
-              getJsonData('http://192.168.1.12/sens');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Result(model: null)));
+              getJsonData('http://192.168.1.11/sens');
             },
-//            onPressed: () async{
-//
-//          getJsonData('http://192.168.1.12/sens');
-//                 Navigator.push(context, MaterialPageRoute(builder: (context) =>Result(model: model)));
-//
-//
-//               },
+
           ),
         ),
       ),
