@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 class Model{
   String ipAddress;
+  String status;
   String sen1;
   String sen2;
   String sen3;
@@ -14,6 +15,7 @@ class Model{
   String sen11;
   String sen12;
   String sen13;
+  String sen14;
 
 
   Model({
@@ -30,6 +32,8 @@ class Model{
     this.sen10,
     this.sen12,
     this.sen13,
+    this.sen14,
+    this.status,
 });
 
 }

@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
       appBar: AppBar(
         title: Text('Health Care'),
@@ -39,15 +40,21 @@ class _HealtFormState extends State<HealtForm> {
     super.initState();
   }
 
-  Future<String> getJsonData(url) async {
+  Future<String> getJsonData(url1,url2) async {
     var response = await http.get(
         //    Encode the Url
-        Uri.encodeFull(url),
+        Uri.encodeFull(url1),
+        //        Only Aspect Json Object
+        headers: {"Accept": "application/json"});
+    var response2 = await http.get(
+      //    Encode the Url
+        Uri.encodeFull(url2),
         //        Only Aspect Json Object
         headers: {"Accept": "application/json"});
     print(response.body);
     setState(() {
       var convertDataToJson = jsonDecode(response.body);
+      var convertDataToJson2 = jsonDecode(response2.body);
       model.sen1 = convertDataToJson['ida'].toString();
       model.sen2 = convertDataToJson['idb'].toString();
       model.sen3 = convertDataToJson['idc'].toString();
@@ -56,11 +63,11 @@ class _HealtFormState extends State<HealtForm> {
       model.sen6 = convertDataToJson['idf'].toString();
       model.sen7 = convertDataToJson['idg'].toString();
       model.sen8 = convertDataToJson['idh'].toString();
-      model.sen9 = convertDataToJson['idi'].toString();
-      model.sen10 = convertDataToJson['idj'].toString();
-      model.sen11 = convertDataToJson['idk'].toString();
-      model.sen12 = convertDataToJson['idl'].toString();
-      model.sen13 = convertDataToJson['idm'].toString();
+      model.sen9 = convertDataToJson2['idi'].toString();
+      model.sen10 = convertDataToJson2['idj'].toString();
+      model.sen11 = convertDataToJson2['idk'].toString();
+      model.sen12 = convertDataToJson2['idl'].toString();
+      model.sen13 = convertDataToJson2['idm'].toString();
 //      model.sen2 = convertDataToJson['gpio'].toString();
 //      model.sen3 = convertDataToJson['abc'].toString();
 //      model.sen1 = '10';
@@ -102,7 +109,7 @@ class _HealtFormState extends State<HealtForm> {
               style: TextStyle(fontSize: 15.0),
             ),
             onPressed: () {
-              getJsonData('http://192.168.1.11/sens');
+              getJsonData('http://192.168.1.10/sens','http://192.168.1.10/sens2');
             },
 
           ),
