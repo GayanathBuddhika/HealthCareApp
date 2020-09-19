@@ -197,15 +197,9 @@ class _ResultFormState extends State<Result> {
                     _formKey.currentState.save();
 
 //                    getJsonData('http://192.168.1.14/HealthFog/upload.php?data=63,1,3,145,233,1,0,150,0,2.3,0,0,2');
-//                    getJsonData('http://192.168.1.15/HealthFog/exec.php');
-                    var api1 =
-                        "http://192.168.1.15/HealthFog/upload.php?data=${model.sen1},${model.sen2},${model.sen3},${model.sen4},${model.sen5},${model.sen6},${model.sen7},${model.sen8},${model.sen9},${model.sen10},${model.sen11},${model.sen12},${model.sen13}";
-                    var api2 = "http://192.168.1.15/HealthFog/exec.php";
-                    var api3 =
-                        "http://${model.ipAddress}/HealthFog/arbiter.php";
-                    getJsonData(api1, api2, api3);
-//                  getJsonData2(ip2);
-
+//                    getJsonData('http://192.168.1.15/HealthFog/exec.php')
+                    var masterIpurl = "http://${model.ipAddress}/HealthFog/arbiter.php";
+                    getworkerIp(masterIpurl);
                   }
                 },
                 child: Text("Submit"),
@@ -213,7 +207,7 @@ class _ResultFormState extends State<Result> {
               Padding(
                 padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
                 child: Center(
-                  child: Text("work is send to "+wIpA, textAlign: TextAlign.center,),
+                  child: Text("work is send to "+ wIpA, textAlign: TextAlign.center,),
                 ),
               ),
               Padding(
@@ -241,30 +235,56 @@ class _ResultFormState extends State<Result> {
     );
   }
 
-  Future<String> getJsonData(url1, url2, url3) async {
-    var response3 = await http.get(
-      //    Encode the Url
-        Uri.encodeFull(url3),
-        //        Only Aspect Json Object
-        headers: {"Accept": "application/json"});
+  Future<String> getworkerIp(url) async {
     var response = await http.get(
-        //    Encode the Url
-        Uri.encodeFull(url1),
+      //    Encode the Url
+        Uri.encodeFull(url),
         //        Only Aspect Json Object
         headers: {"Accept": "application/json"});
 
-    var response2 = await http.get(
-        //    Encode the Url
-        Uri.encodeFull(url2),
-        //        Only Aspect Json Object
-        headers: {"Accept": "application/json"});
-
-    print("11111111111111111111111111 : " + response.body);
-    print("222222222222222222222222222 : " + response2.body);
-    print("333333333333333333333333333 : " + response3.body);
     setState(() {
-      var convertDataToJson = jsonDecode(response2.body);
-      wIpA = response3.body;
+      wIpA = response.body.substring(response.body.length -12);
+      print(response.body);
+      if(wIpA.isNotEmpty){
+        print("************************");
+        print("888888888"+wIpA+"7777777777");
+        var api1 =
+            "http://"+wIpA+"/HealthFog/upload.php?data=${model.sen1},${model.sen2},${model.sen3},${model.sen4},${model.sen5},${model.sen6},${model.sen7},${model.sen8},${model.sen9},${model.sen10},${model.sen11},${model.sen12},${model.sen13}";
+
+        getResponse(api1);
+      }
+    });
+
+  }
+
+  Future<String> getResponse(url) async {
+    var response = await http.post(
+      //    Encode the Url
+        Uri.encodeFull(url),
+        //        Only Aspect Json Object
+        headers: {"Accept": "application/json"});
+
+//    print("11111111111111111111111111 : " + response.body);
+    setState(() {
+      print(wIpA);
+      var api2 = "http://"+wIpA+"/HealthFog/exec.php";
+      getResponse2(api2);
+    });
+  }
+  Future<String> getResponse2(url) async {
+    var response = await http.get(
+      //    Encode the Url
+        Uri.encodeFull(url),
+        //        Only Aspect Json Object
+        headers: {"Accept": "application/json"});
+//    print("11111111111111111111111111 : " + response.toString());
+    // check the status code for the result
+    int statusCode = response.statusCode;
+    setState(() {
+      print("5555555   " + statusCode.toString());
+      var convertDataToJson =jsonDecode(response.body);
+
+      print("66666666");
       if (convertDataToJson.toString() == "1") {
         model.status = 'You have a heart disease. pleace consult doctor';
       } else if (convertDataToJson.toString() == "0") {
@@ -275,6 +295,7 @@ class _ResultFormState extends State<Result> {
     });
   }
 }
+
 
 class MyCustomFormField extends StatelessWidget {
   final String hintText;
